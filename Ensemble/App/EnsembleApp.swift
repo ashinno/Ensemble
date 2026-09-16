@@ -72,7 +72,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
               let ctx = NSGraphicsContext(bitmapImageRep: rep) else { return }
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = ctx
-        ctx.cgContext.scaleBy(x: scale, y: scale)
+        ctx.cgContext.translateBy(x: 0, y: CGFloat(h))
+        ctx.cgContext.scaleBy(x: scale, y: -scale)   // layers are top-left; the bitmap context is bottom-left
         layer.render(in: ctx.cgContext)
         NSGraphicsContext.restoreGraphicsState()
         guard let png = rep.representation(using: .png, properties: [:]) else { return }

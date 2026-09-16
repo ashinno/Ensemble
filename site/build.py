@@ -10,8 +10,8 @@ def data_uri(path, maxw=None, flip=False):
     buf = io.BytesIO(); im.save(buf, "PNG", optimize=True)
     return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
 tpl = open("site/template.html").read()
-tpl = tpl.replace("{{IMG_HOST}}", data_uri("design/shots/host.png", 1600, flip=True))
-tpl = tpl.replace("{{IMG_RECV}}", data_uri("design/shots/receiver.png", 1600, flip=True))
+tpl = tpl.replace("{{IMG_HOST}}", data_uri("design/shots/host.png", 1600))
+tpl = tpl.replace("{{IMG_RECV}}", data_uri("design/shots/receiver.png", 1600))
 tpl = tpl.replace("{{IMG_ICON}}", data_uri("design/icon-1024.png", 64))
 bars = []
 for i in range(30):

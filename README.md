@@ -1,4 +1,38 @@
-# Ensemble
+<p align="center">
+  <img src="design/icon-256.png" width="128" height="128" alt="Ensemble icon">
+</p>
+
+<h1 align="center">Ensemble</h1>
+
+<p align="center">
+  <b>One Mac plays. Every Mac plays with it.</b><br>
+  Stream whatever your Mac is playing to the speakers of the other Macs in the house, in sync.
+</p>
+
+<p align="center">
+  <a href="https://ensemble-ecru.vercel.app">Website</a> ·
+  <a href="https://github.com/ashinno/Ensemble/releases/latest/download/Ensemble-0.4.0.zip">Download for macOS</a> ·
+  <a href="#3-using-it">Using it</a> ·
+  <a href="#7-troubleshooting">Troubleshooting</a>
+</p>
+
+<p align="center">
+  <img alt="macOS 15+" src="https://img.shields.io/badge/macOS-15%2B-0a0a0a?style=flat-square&labelColor=1f1f1f">
+  <img alt="Apple Silicon" src="https://img.shields.io/badge/Apple%20Silicon-arm64-0a0a0a?style=flat-square&labelColor=1f1f1f">
+  <img alt="Swift" src="https://img.shields.io/badge/Swift-SwiftUI-ff4d1f?style=flat-square&labelColor=1f1f1f">
+  <img alt="Release" src="https://img.shields.io/github/v/release/ashinno/Ensemble?style=flat-square&color=ff4d1f&labelColor=1f1f1f">
+</p>
+
+<p align="center">
+  <img src="design/shots/host-1600.png" width="100%" alt="Ensemble host window: live waveform, This Mac, Sync, one card per speaker, Pairing, Delay, Click test, Network">
+</p>
+
+<table>
+  <tr>
+    <td width="50%"><img src="design/shots/receiver-1600.png" alt="Receiver window"><br><sub><b>Receiver</b> — locked to the host, volume, headroom and clock drift at a glance</sub></td>
+    <td width="50%"><img src="design/icon-1024.png" alt="Ensemble icon" width="100%"><br><sub><b>Icon</b> — the Sync module's rings, a waveform and the accent dot</sub></td>
+  </tr>
+</table>
 
 **Website:** https://ensemble-ecru.vercel.app · **Download:** [Ensemble‑0.4.0.zip](https://github.com/ashinno/Ensemble/releases/latest/download/Ensemble-0.4.0.zip) · **Source:** https://github.com/ashinno/Ensemble
 
