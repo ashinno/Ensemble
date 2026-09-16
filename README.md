@@ -1,5 +1,7 @@
 # Ensemble
 
+**Website:** https://ensemble-ecru.vercel.app · **Download:** [Ensemble‑0.4.0.zip](https://github.com/ashinno/Ensemble/releases/latest/download/Ensemble-0.4.0.zip) · **Source:** https://github.com/ashinno/Ensemble
+
 Play the audio of one Mac through the speakers of several Macs on the same Wi‑Fi/LAN, in sync.
 Think of it as a small, personal Airfoil: one Mac is the **host** (the source), the others are
 **receivers**. Anything the host plays (Spotify, Apple Music, YouTube, VLC, Chrome, system
@@ -300,6 +302,24 @@ automatically, and if the host's rate changes mid‑session everybody re‑syncs
 
 **Two instances on the same Mac both use the speakers** — expected; that's for testing the
 network path only.
+
+## 7b. Website and releases
+
+The landing page lives in `site/` (`template.html` + `build.py`, which embeds the screenshots
+from `design/shots/` and the icon into `index.html`). It is deployed with Vercel from that folder:
+
+```bash
+python3 site/build.py && cd site && vercel deploy --prod --yes
+```
+
+Releases are GitHub releases with the zip from `scripts/make-dist.sh` attached:
+
+```bash
+./scripts/make-dist.sh && gh release create v0.4.1 dist/Ensemble-0.4.1.zip --title "Ensemble 0.4.1"
+```
+
+The download button on the site points at `releases/latest/download/Ensemble-<version>.zip`, so
+bump the version in `project.yml` and in `site/template.html` together.
 
 ## 8. Verified so far (2026‑09‑16, macOS 27.0, Xcode 26.3, Apple Silicon)
 
