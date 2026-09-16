@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif; -webkit-font-smoothing: antialiased; color: #1d1d1f; }
+    a { color: #4f56d8; } a:hover { color: #3a41c4; }
+    .card { background: #ffffff; border: 1px solid rgba(0,0,0,0.07); border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+    .label { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #86868b; }
+    .seg { display: flex; background: rgba(0,0,0,0.05); border-radius: 8px; padding: 2px; gap: 2px; }
+    .seg > div { flex: 1 1 0; text-align: center; font-size: 12px; font-weight: 500; padding: 5px 6px; border-radius: 6px; color: #3a3a3c; white-space: nowrap; }
+    .seg > div.on { background: #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.12); color: #1d1d1f; font-weight: 600; }
+    .track { position: relative; height: 4px; border-radius: 2px; background: rgba(0,0,0,0.1); flex: 1 1 0; }
+    .knob { position: absolute; top: -8px; width: 20px; height: 20px; border-radius: 50%; background: #ffffff; box-shadow: 0 0 0 1px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.18); }
+    .metric { display: flex; flex-direction: column; gap: 2px; min-width: 64px; }
+    .metric .v { font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .metric .k { font-size: 11px; color: #86868b; }
+    .btn { font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 7px; background: #ffffff; box-shadow: 0 0 0 1px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.06); color: #1d1d1f; }
+  </style>
+</helmet>
+<div style="width: 760px; height: 720px; background: #f3f2f0; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.12);">
+
+  <!-- Title bar -->
+  <div style="display: flex; align-items: center; gap: 16px; height: 52px; padding: 0 16px; background: #ebe9e6; border-bottom: 1px solid rgba(0,0,0,0.08);">
+    <div style="display: flex; gap: 8px;">
+      <div style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f57; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.15);"></div>
+      <div style="width: 12px; height: 12px; border-radius: 50%; background: #febc2e; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.15);"></div>
+      <div style="width: 12px; height: 12px; border-radius: 50%; background: #28c840; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.15);"></div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; flex: 1 1 0;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"></rect><circle cx="12" cy="14" r="3.5"></circle><circle cx="12" cy="7.5" r="1"></circle></svg>
+      <div style="font-size: 13px; font-weight: 600;">Ensemble</div>
+    </div>
+    <div class="seg" style="width: 200px;">
+      <div class="on">Host</div>
+      <div>Receiver</div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div style="display: flex; flex-direction: column; gap: 14px; padding: 18px 20px 20px 20px; flex: 1 1 0; overflow: hidden;">
+
+    <!-- Status hero -->
+    <div class="card" style="display: flex; align-items: center; gap: 18px; padding: 18px 20px;">
+      <div style="width: 48px; height: 48px; border-radius: 12px; background: {{accent}}; display: flex; align-items: center; justify-content: center; flex: 0 0 auto;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-8"></path><circle cx="12" cy="10" r="2"></circle><path d="M7.8 5.8a6 6 0 0 0 0 8.4"></path><path d="M16.2 5.8a6 6 0 0 1 0 8.4"></path><path d="M5 3a10 10 0 0 0 0 14"></path><path d="M19 3a10 10 0 0 1 0 14"></path></svg>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 5px; flex: 1 1 0;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="font-size: 19px; font-weight: 700; letter-spacing: -0.01em;">Ash's MacBook Pro</div>
+          <div style="display: flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 999px; background: rgba(48,164,99,0.12); color: #1f7a45; font-size: 11px; font-weight: 600;">
+            <div style="width: 6px; height: 6px; border-radius: 50%; background: #30a463;"></div>
+            <div>Broadcasting</div>
+          </div>
+        </div>
+        <div style="font-size: 12.5px; color: #6e6e73;">System audio · Built-in speakers · 44.1 kHz · muted at source, replayed in sync</div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-top: 4px;">
+          <div style="font-size: 11px; color: #86868b; width: 34px;">Level</div>
+          <div style="display: flex; align-items: flex-end; gap: 2px; height: 14px;">
+            <div style="width: 5px; height: 6px; border-radius: 1px; background: #30a463;"></div>
+            <div style="width: 5px; height: 9px; border-radius: 1px; background: #30a463;"></div>
+            <div style="width: 5px; height: 12px; border-radius: 1px; background: #30a463;"></div>
+            <div style="width: 5px; height: 14px; border-radius: 1px; background: #30a463;"></div>
+            <div style="width: 5px; height: 10px; border-radius: 1px; background: #30a463;"></div>
+            <div style="width: 5px; height: 7px; border-radius: 1px; background: #30a463;"></div>
+            <div style="width: 5px; height: 11px; border-radius: 1px; background: #30a463;"></div>
+            <div style="width: 5px; height: 13px; border-radius: 1px; background: #30a463;"></div>
+            <div style="width: 5px; height: 8px; border-radius: 1px; background: #30a463;"></div>
+            <div style="width: 5px; height: 5px; border-radius: 1px; background: rgba(0,0,0,0.12);"></div>
+            <div style="width: 5px; height: 5px; border-radius: 1px; background: rgba(0,0,0,0.12);"></div>
+            <div style="width: 5px; height: 5px; border-radius: 1px; background: rgba(0,0,0,0.12);"></div>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 9px; background: #e8453c; color: #ffffff; font-size: 13px; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,0.15);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>
+        <div>Stop</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+      <div class="card" style="display: flex; flex-direction: column; gap: 10px; padding: 14px 16px;">
+        <div class="label">This Mac's speakers</div>
+        <div class="seg">
+          <div class="on">Synced</div>
+          <div>Direct</div>
+          <div>Off</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-top: 4px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6e6e73" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
+          <div class="track"><div style="position: absolute; left: 0; top: 0; height: 4px; width: 80%; border-radius: 2px; background: {{accent}};"></div><div class="knob" style="left: calc(80% - 10px);"></div></div>
+          <div style="font-size: 12px; font-variant-numeric: tabular-nums; color: #6e6e73; width: 32px; text-align: right;">80%</div>
+        </div>
+      </div>
+      <div class="card" style="display: flex; flex-direction: column; gap: 10px; padding: 14px 16px;">
+        <div class="label">Playback delay</div>
+        <div class="seg">
+          <div>Low</div>
+          <div class="on">Balanced</div>
+          <div>Max</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 6px; margin-top: 2px;">
+          <div style="font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.02em;">150</div>
+          <div style="font-size: 12px; color: #6e6e73;">ms behind the source</div>
+        </div>
+      </div>
+      <div class="card" style="display: flex; flex-direction: column; gap: 10px; padding: 14px 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div class="label">Pairing code</div>
+          <div style="width: 30px; height: 18px; border-radius: 9px; background: #30a463; position: relative;"><div style="position: absolute; top: 2px; right: 2px; width: 14px; height: 14px; border-radius: 50%; background: #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.25);"></div></div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-size: 28px; font-weight: 700; letter-spacing: 0.18em; font-variant-numeric: tabular-nums; color: {{accent}};">4821</div>
+          <div class="btn" style="padding: 4px 10px; font-size: 11px;">New</div>
+        </div>
+        <div style="font-size: 11px; color: #86868b;">Ports 51344 / 51345 · local network only</div>
+      </div>
+    </div>
+
+    <!-- Speakers -->
+    <div class="card" style="display: flex; flex-direction: column; flex: 1 1 0; overflow: hidden;">
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px 10px 16px; border-bottom: 1px solid rgba(0,0,0,0.06);">
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <div style="font-size: 13px; font-weight: 700;">Connected speakers</div>
+          <div style="font-size: 12px; color: #86868b;">3 playing · 1 waiting</div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <div class="btn">Clock click</div>
+          <div class="btn">Stream click</div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column;">
+        <!-- this Mac -->
+        <div style="display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-bottom: 1px solid rgba(0,0,0,0.05);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#30a463" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" fill="#30a463" stroke="none"></circle><path d="m8.5 12.5 2.3 2.3 4.7-5" stroke="#ffffff"></path></svg>
+          <div style="display: flex; flex-direction: column; gap: 1px; width: 150px;">
+            <div style="font-size: 13px; font-weight: 600;">This Mac</div>
+            <div style="font-size: 11px; color: #86868b;">Built-in speakers · synchronized</div>
+          </div>
+          <div style="display: flex; gap: 12px; flex: 1 1 0;">
+            <div class="metric"><div class="v">—</div><div class="k">Latency</div></div>
+            <div class="metric"><div class="v">Good</div><div class="k">Quality</div></div>
+            <div class="metric"><div class="v">116 ms</div><div class="k">Buffer</div></div>
+            <div class="metric"><div class="v">0.00 ms</div><div class="k">Drift</div></div>
+          </div>
+        </div>
+        <!-- MacBook Air -->
+        <div style="display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-bottom: 1px solid rgba(0,0,0,0.05);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#30a463" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" fill="#30a463" stroke="none"></circle><path d="m8.5 12.5 2.3 2.3 4.7-5" stroke="#ffffff"></path></svg>
+          <div style="display: flex; flex-direction: column; gap: 1px; width: 150px;">
+            <div style="font-size: 13px; font-weight: 600;">MacBook Air</div>
+            <div style="font-size: 11px; color: #86868b;">192.168.1.24 · streaming</div>
+          </div>
+          <div style="display: flex; gap: 12px; flex: 1 1 0;">
+            <div class="metric"><div class="v">3.1 ms</div><div class="k">Latency</div></div>
+            <div class="metric"><div class="v" style="color: #1f7a45;">Good</div><div class="k">Quality · 0.0% loss</div></div>
+            <div class="metric"><div class="v">118 ms</div><div class="k">Buffer</div></div>
+            <div class="metric"><div class="v">0.02 ms</div><div class="k">Drift</div></div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; width: 124px;">
+            <div class="track"><div style="position: absolute; left: 0; top: 0; height: 4px; width: 65%; border-radius: 2px; background: {{accent}};"></div><div class="knob" style="left: calc(65% - 8px); width: 16px; height: 16px; top: -6px;"></div></div>
+            <div style="font-size: 11px; color: #6e6e73; font-variant-numeric: tabular-nums; width: 28px; text-align: right;">65%</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#aeaeb2" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+        </div>
+        <!-- Office-Mac -->
+        <div style="display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-bottom: 1px solid rgba(0,0,0,0.05);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#30a463" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" fill="#30a463" stroke="none"></circle><path d="m8.5 12.5 2.3 2.3 4.7-5" stroke="#ffffff"></path></svg>
+          <div style="display: flex; flex-direction: column; gap: 1px; width: 150px;">
+            <div style="font-size: 13px; font-weight: 600;">Office-Mac</div>
+            <div style="font-size: 11px; color: #86868b;">192.168.1.31 · streaming</div>
+          </div>
+          <div style="display: flex; gap: 12px; flex: 1 1 0;">
+            <div class="metric"><div class="v">7.8 ms</div><div class="k">Latency</div></div>
+            <div class="metric"><div class="v" style="color: #b7791f;">Fair</div><div class="k">Quality · 1.2% loss</div></div>
+            <div class="metric"><div class="v">104 ms</div><div class="k">Buffer</div></div>
+            <div class="metric"><div class="v">0.4 ms</div><div class="k">Drift</div></div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; width: 124px;">
+            <div class="track"><div style="position: absolute; left: 0; top: 0; height: 4px; width: 100%; border-radius: 2px; background: {{accent}};"></div><div class="knob" style="left: calc(100% - 8px); width: 16px; height: 16px; top: -6px;"></div></div>
+            <div style="font-size: 11px; color: #6e6e73; font-variant-numeric: tabular-nums; width: 28px; text-align: right;">100%</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#aeaeb2" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+        </div>
+        <!-- pending -->
+        <div style="display: flex; align-items: center; gap: 12px; padding: 11px 16px; background: rgba(240,160,40,0.07);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d9861c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4.5"></path><circle cx="12" cy="16" r="0.6" fill="#d9861c"></circle></svg>
+          <div style="display: flex; flex-direction: column; gap: 1px; width: 150px;">
+            <div style="font-size: 13px; font-weight: 600;">Kitchen iMac</div>
+            <div style="font-size: 11px; color: #a06511;">192.168.1.40 · wants to connect</div>
+          </div>
+          <div style="flex: 1 1 0; font-size: 12px; color: #6e6e73;">No pairing code entered. Allow this Mac?</div>
+          <div style="display: flex; gap: 8px;">
+            <div class="btn" style="background: {{accent}}; color: #ffffff; box-shadow: none;">Allow</div>
+            <div class="btn">Deny</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 4px;">
+      <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6e6e73;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6e6e73" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+        <div>Diagnostics</div>
+      </div>
+      <div style="font-size: 11px; color: #aeaeb2;">Clocks synced · 0 underruns in the last minute</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#4f56d8","options":["#4f56d8","#2f6fe4","#0f8f86","#d9531e"]}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#4f56d8' };
+  }
+}
+</script>
+</body>
+</html>

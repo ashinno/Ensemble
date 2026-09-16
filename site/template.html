@@ -1,0 +1,317 @@
+<title>Ensemble</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #0a0a0a; --card: #131313; --card-2: #171717; --border: #1f1f1f; --border-2: #2a2a2a;
+    --text: #ececec; --title: #a8a8a8; --dim: #7a7a7a; --label: #6a6a6a; --stroke: #d4d4d4;
+    --accent: #ff4d1f; --accent-ink: #0a0a0a; --pending: #ffb347;
+    --sans: "Geist", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --radius: 16px; --gap: 12px;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.55;
+         -webkit-font-smoothing: antialiased; padding-inline: 16px; padding-block: 0 64px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #fff; }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .led { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px rgba(255,77,31,.6); display: inline-block; }
+  .led.idle { background: #3a3a3a; box-shadow: none; }
+
+  /* nav */
+  nav { display: flex; align-items: center; gap: 16px; height: 64px; border-bottom: 1px solid var(--border); }
+  nav .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+  nav .brand img { width: 26px; height: 26px; border-radius: 7px; }
+  nav .links { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+  nav .links a { color: var(--dim); font-size: 13px; padding: 6px 12px; border-radius: 6px; }
+  nav .links a:hover { color: var(--text); background: var(--card-2); }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 9px; border: 1px solid var(--border-2);
+         background: var(--card-2); color: var(--text); font-size: 13px; font-weight: 500; white-space: nowrap; }
+  .btn:hover { color: var(--text); background: #1e1e1e; }
+  .btn.primary { background: var(--accent); border-color: transparent; color: var(--accent-ink); font-weight: 600; }
+  .btn.primary:hover { background: #ff6a42; color: var(--accent-ink); }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; align-items: center; padding-block: 72px 40px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--accent); text-transform: uppercase; }
+  h1 { font-size: clamp(40px, 5.2vw, 64px); line-height: 1.02; letter-spacing: -0.03em; font-weight: 700; margin: 18px 0 20px; text-wrap: balance; }
+  h1 em { font-style: normal; color: var(--dim); }
+  .lede { font-size: 17px; color: var(--title); max-width: 34em; margin: 0 0 28px; text-wrap: pretty; }
+  .cta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .cta .note { font-size: 12px; color: var(--label); }
+
+  /* module cards (the app's vocabulary) */
+  .module { position: relative; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px;
+            display: flex; flex-direction: column; min-height: 186px; }
+  .module .t { font-size: 12px; font-weight: 500; color: var(--title); }
+  .module .led { position: absolute; top: 14px; right: 16px; }
+  .module .viz { flex: 1; display: flex; align-items: center; justify-content: center; padding: 10px 0; }
+  .params { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; }
+  .p { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .p .k { font-size: 10px; color: var(--label); }
+  .p .v { font-family: var(--mono); font-size: 13px; color: var(--text); }
+  .p .v.a { color: var(--accent); }
+  .master { grid-column: span 3; padding: 14px 20px; }
+  .master .head { display: flex; justify-content: space-between; font-size: 13px; font-weight: 500; }
+  .master .head .time { font-family: var(--mono); font-size: 11px; color: var(--dim); font-weight: 400; }
+  .master .foot { display: flex; justify-content: space-between; align-items: center; font-size: 12px; gap: 12px; }
+  .master .foot .src { color: var(--dim); }
+  .master .foot .src b { color: var(--text); font-weight: 500; }
+  .onair { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+  .hero-app { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: var(--gap); }
+  .hero-app canvas { width: 100%; height: 72px; display: block; }
+  .hero-app .module { min-height: 172px; }
+  .hero-app .fake-btn { font-size: 11px; padding: 5px 10px; border: 1px solid var(--border-2); border-radius: 8px; background: var(--card-2); color: var(--text); }
+  .hero-app .fake-btn.on { background: var(--accent); color: var(--accent-ink); border-color: transparent; font-weight: 600; }
+  .seg { display: flex; gap: 6px; justify-content: center; margin-bottom: 8px; }
+
+  /* sections */
+  section { padding-block: 56px; border-top: 1px solid var(--border); }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 26px; flex-wrap: wrap; }
+  h2 { font-size: 28px; letter-spacing: -0.02em; margin: 0; font-weight: 600; text-wrap: balance; }
+  .sec-head p { margin: 0; color: var(--dim); max-width: 40em; font-size: 14px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--gap); }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: var(--gap); }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--gap); }
+  .feature { min-height: 0; padding: 18px 18px 16px; gap: 10px; }
+  .feature h3 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .feature p { margin: 0; color: var(--dim); font-size: 13px; text-wrap: pretty; }
+  .feature .viz { padding: 6px 0 2px; justify-content: flex-start; flex: 0 0 auto; }
+  .feature svg { display: block; }
+
+  /* screenshots */
+  .shot { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 10px; overflow: hidden; }
+  .shot img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--border); }
+  .shot .cap { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 8px 4px; font-size: 13px; }
+  .shot .cap span { color: var(--dim); font-size: 12px; }
+  .shots { display: grid; grid-template-columns: 1fr; gap: 20px; }
+
+  /* steps + specs */
+  .steps { counter-reset: s; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--gap); }
+  .step { min-height: 0; padding: 18px; gap: 8px; }
+  .step .n { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+  .step h3 { margin: 0; font-size: 15px; font-weight: 600; }
+  .step p { margin: 0; color: var(--dim); font-size: 13px; }
+  .step code { font-family: var(--mono); font-size: 12px; background: var(--bg); border: 1px solid var(--border); padding: 2px 6px; border-radius: 5px; color: var(--text); }
+  pre { font-family: var(--mono); font-size: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; overflow-x: auto; margin: 6px 0 0; color: var(--text); }
+  .spec { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: var(--gap); }
+  .spec .module { min-height: 0; padding: 16px; gap: 6px; }
+  .spec .k { font-size: 10px; color: var(--label); letter-spacing: .04em; text-transform: uppercase; }
+  .spec .v { font-family: var(--mono); font-size: 20px; letter-spacing: -0.01em; }
+  .spec .d { font-size: 12px; color: var(--dim); }
+
+  footer { border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--label); }
+  footer .mono { color: var(--dim); }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 32px; padding-block: 48px 24px; }
+    .grid-3, .grid-4, .steps, .spec { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .hero-app { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .master { grid-column: span 2; }
+  }
+  @media (max-width: 560px) {
+    .grid-3, .grid-4, .steps, .spec, .grid-2 { grid-template-columns: 1fr; }
+    .hero-app { grid-template-columns: 1fr; }
+    .master { grid-column: span 1; }
+    nav .links a:not(.btn) { display: none; }
+    h1 { font-size: 38px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .anim { animation: none !important; } }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+  <nav>
+    <a class="brand" href="#top" style="color: var(--text)"><img src="{{IMG_ICON}}" alt="" width="26" height="26">Ensemble</a>
+    <div class="links">
+      <a href="#how">How it works</a>
+      <a href="#screens">Screens</a>
+      <a href="#features">Features</a>
+      <a href="https://github.com/ashinno/Ensemble" style="color:var(--dim)">GitHub</a>
+      <a href="https://github.com/ashinno/Ensemble/releases/latest/download/Ensemble-0.4.0.zip" class="btn primary">Download</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div>
+      <div class="eyebrow"><span class="led"></span> macOS · Apple Silicon · local network</div>
+      <h1>One Mac plays.<br>Every Mac plays <em>with it.</em></h1>
+      <p class="lede">Ensemble takes whatever your Mac is playing, Spotify, YouTube, a call, anything, and plays it through the speakers of the other Macs in the house at the same instant. No cables, no virtual audio driver, no account.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/ashinno/Ensemble/releases/latest/download/Ensemble-0.4.0.zip">Download for macOS</a>
+        <a class="btn" href="#how">See how it stays in sync</a>
+        <span class="note">Free, personal build · macOS 15 or newer</span>
+      </div>
+    </div>
+
+    <div class="hero-app" aria-label="Live preview of the Ensemble host window">
+      <div class="module master">
+        <div class="head"><span>Ash's MacBook Pro</span><span class="time" id="clock">00:00:00</span></div>
+        <div class="viz" style="padding: 8px 0"><canvas id="wave" class="anim" width="1200" height="144"></canvas></div>
+        <div class="foot"><span class="src">Source <b>System audio</b> · 48 kHz</span><span class="onair">ON AIR</span></div>
+      </div>
+      <div class="module">
+        <div class="t">This Mac</div><span class="led"></span>
+        <div class="viz"><canvas id="bars" class="anim" width="240" height="88" style="width:120px;height:44px"></canvas></div>
+        <div class="seg"><span class="fake-btn on">Sync</span><span class="fake-btn">Direct</span><span class="fake-btn">Off</span></div>
+        <div class="params"><div class="p"><div class="k">Volume</div><div class="v">100%</div></div><div class="p"><div class="k">Delay</div><div class="v">60 ms</div></div></div>
+      </div>
+      <div class="module">
+        <div class="t">Sync</div><span class="led"></span>
+        <div class="viz">
+          <svg width="84" height="84" viewBox="0 0 84 84" fill="none" aria-hidden="true">
+            <circle cx="42" cy="42" r="7.7" stroke="#595959"/><circle cx="42" cy="42" r="15.5" stroke="#595959"/><circle cx="42" cy="42" r="23.2" stroke="#595959"/><circle cx="42" cy="42" r="30.9" stroke="#595959"/><circle cx="42" cy="42" r="38.6" stroke="#595959"/>
+            <circle cx="42" cy="42" r="3" fill="#ff4d1f"/>
+          </svg>
+        </div>
+        <div class="params"><div class="p"><div class="k">Drift</div><div class="v">0.00 ms</div></div><div class="p"><div class="k">Rate</div><div class="v">+0 ppm</div></div><div class="p"><div class="k">Buffer</div><div class="v">48 ms</div></div></div>
+      </div>
+      <div class="module">
+        <div class="t">MacBook Air</div><span class="led"></span>
+        <div class="viz"><canvas id="bars2" class="anim" width="240" height="88" style="width:120px;height:44px"></canvas></div>
+        <div class="params"><div class="p"><div class="k">RTT</div><div class="v">3.1 ms</div></div><div class="p"><div class="k">Needs</div><div class="v">52 ms</div></div><div class="p"><div class="k">Loss</div><div class="v">0.0%</div></div></div>
+      </div>
+      <div class="module">
+        <div class="t">Office Mac mini</div><span class="led"></span>
+        <div class="viz"><canvas id="bars3" class="anim" width="240" height="88" style="width:120px;height:44px"></canvas></div>
+        <div class="params"><div class="p"><div class="k">RTT</div><div class="v">1.9 ms</div></div><div class="p"><div class="k">Needs</div><div class="v">44 ms</div></div><div class="p"><div class="k">Loss</div><div class="v">0.0%</div></div></div>
+      </div>
+      <div class="module">
+        <div class="t">Pairing</div><span class="led"></span>
+        <div class="viz"><span class="mono" style="font-size: 30px; letter-spacing: .3em">4821</span></div>
+        <div class="params"><div class="p"><div class="k">Required</div><div class="v a">On</div></div><div class="p"><div class="k">Port</div><div class="v">51344</div></div></div>
+      </div>
+      <div class="module">
+        <div class="t">Delay</div><span class="led"></span>
+        <div class="viz"><svg width="150" height="48" viewBox="0 0 150 48" fill="none" aria-hidden="true">{{DELAY_BARS}}</svg></div>
+        <div class="seg"><span class="fake-btn on">Auto</span><span class="fake-btn">Low</span><span class="fake-btn">Mid</span><span class="fake-btn">Max</span></div>
+        <div class="params"><div class="p"><div class="k">Delay</div><div class="v a">60 ms</div></div></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="how">
+    <div class="sec-head">
+      <h2>How it stays in sync</h2>
+      <p>Two Macs with two clocks and two Wi‑Fi radios should sound like one speaker, not an echo. Three mechanisms make that happen.</p>
+    </div>
+    <div class="grid-3">
+      <div class="module feature">
+        <div class="viz"><svg width="140" height="48" viewBox="0 0 140 48" fill="none" aria-hidden="true">{{CAPTURE_VIZ}}</svg></div>
+        <h3>Capture without a cable</h3>
+        <p>Ensemble taps the audio your Mac is already playing with Core Audio's process tap. Nothing to install, no virtual device, and it can mute the original so the host's own speakers join the ensemble with the same delay as everyone else.</p>
+        <div class="params" style="justify-content:flex-start"><div class="p" style="align-items:flex-start"><div class="k">Capture buffer</div><div class="v">128 frames · 2.7 ms</div></div><div class="p" style="align-items:flex-start"><div class="k">Microphone</div><div class="v">never</div></div></div>
+      </div>
+      <div class="module feature">
+        <div class="viz"><svg width="84" height="48" viewBox="0 0 84 48" fill="none" aria-hidden="true"><circle cx="42" cy="24" r="6" stroke="#595959"/><circle cx="42" cy="24" r="12" stroke="#595959"/><circle cx="42" cy="24" r="18" stroke="#595959"/><circle cx="42" cy="24" r="23" stroke="#595959"/><circle cx="42" cy="24" r="3" fill="#ff4d1f"/></svg></div>
+        <h3>Clocks that agree</h3>
+        <p>Every packet carries the host's capture time. Each receiver measures its clock offset ten times a second, keeps only the fastest round trips, and steers playback by nudging its rate a fraction of a percent so drift never builds up.</p>
+        <div class="params" style="justify-content:flex-start"><div class="p" style="align-items:flex-start"><div class="k">Offset accuracy</div><div class="v">± 0.03 ms</div></div><div class="p" style="align-items:flex-start"><div class="k">Rate nudge</div><div class="v">≤ 0.4 %</div></div></div>
+      </div>
+      <div class="module feature">
+        <div class="viz"><svg width="150" height="48" viewBox="0 0 150 48" fill="none" aria-hidden="true">{{DELAY_BARS}}</svg></div>
+        <h3>The smallest delay that works</h3>
+        <p>Auto mode measures how late audio really arrives on each Mac and picks the shortest delay the network can carry: raising within two seconds when it must, lowering step by step when it can, and jumping every Mac at once so they never drift apart.</p>
+        <div class="params" style="justify-content:flex-start"><div class="p" style="align-items:flex-start"><div class="k">Ethernet</div><div class="v">40–60 ms</div></div><div class="p" style="align-items:flex-start"><div class="k">Wi‑Fi</div><div class="v">150–300 ms</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screens">
+    <div class="sec-head">
+      <h2>Two roles, one window</h2>
+      <p>Pick Host on the Mac that plays, Receiver on the ones that listen. Everything that matters is a module; everything else waits behind Diagnostics.</p>
+    </div>
+    <div class="shots">
+      <figure class="shot" style="margin:0">
+        <img src="{{IMG_HOST}}" alt="Ensemble host window: master strip with live waveform, This Mac, Sync, one card per connected speaker, Pairing, Delay, Click test and Network modules" loading="lazy">
+        <figcaption class="cap"><b>Host</b><span>Broadcasting to one receiver, local speakers in sync, Auto delay</span></figcaption>
+      </figure>
+      <figure class="shot" style="margin:0">
+        <img src="{{IMG_RECV}}" alt="Ensemble receiver window: incoming waveform, volume gauge, Sync rings, Fine‑tune, Delay, Hosts nearby, Pairing, Stream, Host clock and Diagnostics modules" loading="lazy">
+        <figcaption class="cap"><b>Receiver</b><span>Locked to the host, headroom and clock drift visible at a glance</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="sec-head">
+      <h2>Everything a house full of Macs needs</h2>
+      <p>Built for one person's living room, not a product roadmap. Each module does one thing.</p>
+    </div>
+    <div class="grid-4">
+      <div class="module feature"><div class="viz"><svg width="120" height="40" viewBox="0 0 120 40" fill="none" aria-hidden="true"><rect x="4" y="8" width="34" height="22" rx="3" stroke="#d4d4d4"/><rect x="82" y="8" width="34" height="22" rx="3" stroke="#d4d4d4"/><path d="M40 19h40" stroke="#ff4d1f" stroke-dasharray="3 3"/><circle cx="60" cy="19" r="3" fill="#ff4d1f"/></svg></div><h3>Finds every Mac by itself</h3><p>Hosts announce themselves over Bonjour. Receivers list them within seconds. One click to connect, or type an IP when you must.</p></div>
+      <div class="module feature"><div class="viz"><span class="mono" style="font-size: 24px; letter-spacing: .28em; color: var(--text)">4821</span></div><h3>A code, or a nod</h3><p>Receivers that know the four‑digit code join instantly. Anyone else waits until you click Allow. Only devices on your local network are accepted.</p></div>
+      <div class="module feature"><div class="viz"><svg width="120" height="40" viewBox="0 0 120 40" fill="none" aria-hidden="true"><rect x="4" y="18" width="112" height="4" rx="2" fill="#2a2a2a"/><rect x="4" y="18" width="72" height="4" rx="2" fill="#ff4d1f"/><circle cx="76" cy="20" r="6" fill="#ececec"/></svg></div><h3>Volume for each room</h3><p>Every speaker has its own slider on the host, and its own on the receiver. Mute the kitchen without touching the office.</p></div>
+      <div class="module feature"><div class="viz"><svg width="120" height="40" viewBox="0 0 120 40" fill="none" aria-hidden="true"><path d="M0 20h48l5-14 5 28 5-18 5 4h52" stroke="#d4d4d4"/><path d="M60 0v40" stroke="#ff4d1f" stroke-dasharray="2 3"/></svg></div><h3>Prove it with a click</h3><p>Play a click on every Mac at the same instant, or push one through the stream itself. One click means aligned; a double click tells you which Mac to nudge.</p></div>
+      <div class="module feature"><div class="viz"><svg width="120" height="40" viewBox="0 0 120 40" fill="none" aria-hidden="true"><path d="M2 20c20-24 40 24 60 0s40-24 56 0" stroke="#d4d4d4"/><path d="M60 2v36" stroke="#ff4d1f" stroke-width="1.5"/></svg></div><h3>Fine‑tune any speaker</h3><p>Bluetooth speakers lie about their latency. Slide a receiver a few milliseconds earlier or later until the clicks line up.</p></div>
+      <div class="module feature"><div class="viz"><div style="display:flex;gap:6px"><span class="fake-btn on" style="font-size:11px;padding:5px 10px;border-radius:8px;background:var(--accent);color:var(--accent-ink);font-weight:600">Sync</span><span class="fake-btn" style="font-size:11px;padding:5px 10px;border:1px solid var(--border-2);border-radius:8px">Direct</span><span class="fake-btn" style="font-size:11px;padding:5px 10px;border:1px solid var(--border-2);border-radius:8px">Off</span></div></div><h3>Your own speakers, your call</h3><p>Sync delays the host so it plays with the others. Direct keeps video in lip‑sync and lets the other rooms trail. Off sends the sound away entirely.</p></div>
+      <div class="module feature"><div class="viz"><svg width="120" height="40" viewBox="0 0 120 40" fill="none" aria-hidden="true">{{LEVELS_VIZ}}</svg></div><h3>Survives a flaky network</h3><p>Sequence numbers, timestamps, a jitter buffer, silence for lost packets, and automatic reconnection. A bad second sounds like a bad second, not a restart.</p></div>
+      <div class="module feature"><div class="viz"><span class="mono" style="font-size:12px;color:var(--dim)">rtt 3.1 ms · offset +0.02 · drift 0.00<br>buffer 118 ms · lost 0 · underruns 0</span></div><h3>Numbers when you want them</h3><p>Round trip, jitter, clock offset, buffer, drift, packets lost, underruns, resyncs, and an event log, one click away and out of sight otherwise.</p></div>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="sec-head">
+      <h2>Up and running in a minute</h2>
+      <p>Same app on every Mac. Nothing to configure beyond two permission prompts.</p>
+    </div>
+    <div class="steps">
+      <div class="module step"><div class="n">Host Mac</div><h3>Open Ensemble, press Start</h3><p>macOS asks once to let Ensemble record this computer's audio. Allow it. If it ever stays silent, turn it on under Privacy &amp; Security → Screen &amp; System Audio Recording.</p></div>
+      <div class="module step"><div class="n">Every other Mac</div><h3>Choose Receiver, click Connect</h3><p>The host shows up under Hosts nearby within a few seconds. Type the pairing code from the host's window, or let the host click Allow.</p></div>
+      <div class="module step"><div class="n">Getting the app</div><h3>Copy the zip, open once</h3><p>Download <a href="https://github.com/ashinno/Ensemble/releases/latest/download/Ensemble-0.4.0.zip">Ensemble‑0.4.0.zip</a> from the GitHub release (or build it with <code>scripts/make-dist.sh</code>). Unzip, drag to Applications, right‑click → Open the first time. If Gatekeeper refuses:</p><pre>xattr -dr com.apple.quarantine /Applications/Ensemble.app</pre></div>
+    </div>
+    <div class="spec" style="margin-top: var(--gap)">
+      <div class="module"><div class="k">Requires</div><div class="v">macOS 15+</div><div class="d">Apple Silicon, any Wi‑Fi or Ethernet LAN</div></div>
+      <div class="module"><div class="k">Audio</div><div class="v">16‑bit PCM</div><div class="d">44.1 or 48 kHz stereo, 5 ms packets, ~1.5 Mbit/s per speaker</div></div>
+      <div class="module"><div class="k">Transport</div><div class="v">UDP + TCP</div><div class="d">Audio and clock sync over UDP, control over TCP, discovery over Bonjour</div></div>
+      <div class="module"><div class="k">Privacy</div><div class="v">LAN only</div><div class="d">No accounts, no servers, nothing leaves your network</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Ensemble · a personal project by Ash, built in Swift and SwiftUI</span>
+    <span class="mono"><a href="https://github.com/ashinno/Ensemble" style="color:var(--dim)">github.com/ashinno/Ensemble</a> · v0.4.0</span>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const accent = '#ff4d1f', stroke = '#d4d4d4';
+  const wave = document.getElementById('wave');
+  const bars = ['bars','bars2','bars3'].map(id => document.getElementById(id));
+  const clock = document.getElementById('clock');
+  const start = performance.now();
+  let hist = new Array(240).fill(0);
+  let seed = 7;
+  const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+  function level(t) { // slow musical envelope
+    return Math.max(0.02, (0.55 + 0.45 * Math.sin(2*Math.PI*0.37*t)) * (0.6 + 0.4 * Math.sin(2*Math.PI*1.9*t + 1)) * (0.7 + 0.3*Math.sin(2*Math.PI*5.3*t)) * (0.85 + 0.3*rnd()));
+  }
+  function drawWave() {
+    const c = wave.getContext('2d'); const w = wave.width, h = wave.height, mid = h/2;
+    c.clearRect(0,0,w,h); c.lineWidth = 2; c.strokeStyle = stroke; c.beginPath();
+    hist.forEach((v,i) => { const x = w * i/(hist.length-1); const a = v*mid*0.92; const y = i%2 ? mid+a : mid-a; i ? c.lineTo(x,y) : c.moveTo(x,y); });
+    c.stroke();
+    const px = w * (1 - 60/2400); c.strokeStyle = accent; c.lineWidth = 3; c.beginPath(); c.moveTo(px,0); c.lineTo(px,h); c.stroke();
+  }
+  function drawBars(el, offset) {
+    const c = el.getContext('2d'); const w = el.width, h = el.height; c.clearRect(0,0,w,h); c.strokeStyle = stroke; c.lineWidth = 3;
+    const n = 12, gap = w/n; const last = hist.slice(-n);
+    last.forEach((v,i) => { const x = gap*i + gap/2; const hh = Math.max(2, Math.min(1, v*(1+offset)) * h); c.beginPath(); c.moveTo(x,h); c.lineTo(x,h-hh); c.stroke(); });
+  }
+  function tick(now) {
+    const t = (now - start)/1000;
+    hist.push(level(t)); hist.shift();
+    drawWave(); bars.forEach((b,i) => drawBars(b, i*0.05));
+    const s = Math.floor(t); clock.textContent = String(Math.floor(s/3600)).padStart(2,'0') + ':' + String(Math.floor(s/60)%60).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+    if (!reduce) requestAnimationFrame(tick);
+  }
+  for (let i = 0; i < hist.length; i++) hist[i] = level(i/50);
+  drawWave(); bars.forEach((b,i) => drawBars(b, i*0.05));
+  if (!reduce) requestAnimationFrame(tick);
+})();
+</script>

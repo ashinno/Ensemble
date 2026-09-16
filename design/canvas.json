@@ -1,0 +1,86 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "title": "Host \u2014 modular",
+      "x": 0,
+      "y": 0,
+      "w": 960,
+      "h": 660,
+      "page": "page-1"
+    },
+    {
+      "file": "Receiver.dc.html",
+      "title": "Receiver \u2014 modular",
+      "x": 1060,
+      "y": 0,
+      "w": 960,
+      "h": 660,
+      "page": "page-1"
+    },
+    {
+      "file": "HostTerminal.dc.html",
+      "title": "Host \u2014 terminal (v2)",
+      "x": 0,
+      "y": 0,
+      "w": 760,
+      "h": 720,
+      "page": "page-2"
+    },
+    {
+      "file": "ReceiverTerminal.dc.html",
+      "title": "Receiver \u2014 terminal (v2)",
+      "x": 860,
+      "y": 0,
+      "w": 760,
+      "h": 720,
+      "page": "page-2"
+    },
+    {
+      "file": "HostLight.dc.html",
+      "title": "Host \u2014 light (v1)",
+      "x": 0,
+      "y": 0,
+      "w": 760,
+      "h": 720,
+      "page": "page-3"
+    },
+    {
+      "file": "ReceiverLight.dc.html",
+      "title": "Receiver \u2014 light (v1)",
+      "x": 860,
+      "y": 0,
+      "w": 760,
+      "h": 720,
+      "page": "page-3"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "note-modular",
+      "x": 0,
+      "y": -150,
+      "w": 460,
+      "page": "page-1",
+      "text": "Modular direction (from the synth-dashboard reference): one visual + at most four values per card, thin line-art, a single accent LED per module. Accent chip: orange like the reference, or the phosphor green from v2."
+    }
+  ],
+  "pages": [
+    {
+      "id": "page-1",
+      "name": "Modular v3"
+    },
+    {
+      "id": "page-2",
+      "name": "Terminal v2"
+    },
+    {
+      "id": "page-3",
+      "name": "Light v1"
+    }
+  ],
+  "launch": {
+    "view": "canvas",
+    "page": "page-1"
+  }
+}

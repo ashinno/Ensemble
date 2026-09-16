@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; font-family: "Geist", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; -webkit-font-smoothing: antialiased; color: #ececec; font-size: 12px; }
+    a { color: {{accent}}; } a:hover { color: #ffffff; }
+    .mono { font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace; font-variant-numeric: tabular-nums; }
+    .win { width: 960px; height: 660px; background: #0a0a0a; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 24px 70px rgba(0,0,0,0.6), 0 0 0 1px #1c1c1c; }
+    .card { position: relative; display: flex; flex-direction: column; background: #131313; border: 1px solid #1f1f1f; border-radius: 16px; padding: 14px 16px; min-height: 0; }
+    .title { font-size: 12px; font-weight: 500; color: #a8a8a8; }
+    .led { position: absolute; top: 14px; right: 16px; width: 6px; height: 6px; border-radius: 50%; background: {{accent}}; }
+    .led.idle { background: #3a3a3a; }
+    .viz { flex: 1 1 0; display: flex; align-items: center; justify-content: center; min-height: 0; }
+    .params { display: flex; gap: 22px; justify-content: center; }
+    .p { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .p .k { font-size: 10px; color: #6a6a6a; }
+    .p .v { font-size: 13px; color: #f2f2f2; }
+    .p .v.a { color: {{accent}}; }
+    .btn { padding: 6px 12px; border-radius: 8px; border: 1px solid #2a2a2a; font-size: 11px; color: #ececec; background: #171717; }
+    .btn.primary { background: {{accent}}; border-color: transparent; color: #0a0a0a; font-weight: 600; }
+    .tab { padding: 5px 12px; font-size: 11px; color: #7a7a7a; border-radius: 6px; }
+    .tab.on { color: #ececec; background: #1c1c1c; }
+    .dim { color: #7a7a7a; }
+    .mute { color: #4c4c4c; }
+    .list { display: flex; flex-direction: column; flex: 1 1 0; justify-content: center; gap: 10px; }
+    .li { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: {{accent}}; flex: 0 0 auto; }
+    .dot.idle { background: #3a3a3a; }
+  </style>
+</helmet>
+<div class="win">
+  <div style="display: flex; align-items: center; gap: 16px; height: 44px; padding: 0 16px; border-bottom: 1px solid #1a1a1a;">
+    <div style="display: flex; gap: 7px;">
+      <div style="width: 11px; height: 11px; border-radius: 50%; background: #2a2a2a;"></div>
+      <div style="width: 11px; height: 11px; border-radius: 50%; background: #2a2a2a;"></div>
+      <div style="width: 11px; height: 11px; border-radius: 50%; background: #2a2a2a;"></div>
+    </div>
+    <div style="font-size: 12px; font-weight: 600; flex: 1 1 0;">Ensemble</div>
+    <div style="display: flex; gap: 2px; background: #111111; border: 1px solid #1f1f1f; border-radius: 8px; padding: 2px;">
+      <div class="tab on">Host</div>
+      <div class="tab">Receiver</div>
+    </div>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 16px; flex: 1 1 0; min-height: 0;">
+      
+      <div class="card" style="grid-column: span 3; padding: 14px 20px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-size: 13px; font-weight: 500;">Ash's MacBook Pro</div>
+          <div class="mono dim" style="font-size: 11px;">00:12:31</div>
+        </div>
+        <div class="viz"><svg width="620" height="70" viewBox="0 0 620 70" fill="none"><polyline points="0.0,33.0 2.8,37.5 5.7,52.8 8.5,33.6 11.3,35.3 14.2,38.7 17.0,21.6 19.8,35.5 22.6,40.5 25.5,47.6 28.3,17.5 31.1,26.5 34.0,17.1 36.8,48.6 39.6,43.6 42.5,14.5 45.3,56.7 48.1,56.1 51.0,42.1 53.8,40.3 56.6,19.0 59.5,12.2 62.3,36.3 65.1,13.9 67.9,20.0 70.8,22.4 73.6,11.9 76.4,33.2 79.3,32.0 82.1,52.3 84.9,36.0 87.8,42.2 90.6,35.0 93.4,43.4 96.3,32.8 99.1,23.3 101.9,61.3 104.7,61.3 107.6,53.2 110.4,46.1 113.2,25.1 116.1,20.4 118.9,23.6 121.7,11.7 124.6,49.5 127.4,29.6 130.2,53.9 133.1,28.8 135.9,59.9 138.7,53.9 141.6,8.0 144.4,19.3 147.2,57.1 150.0,33.4 152.9,60.6 155.7,29.6 158.5,12.5 161.4,41.8 164.2,49.4 167.0,23.2 169.9,14.0 172.7,26.6 175.5,58.1 178.4,47.7 181.2,16.4 184.0,22.8 186.8,16.1 189.7,14.5 192.5,48.6 195.3,20.4 198.2,37.6 201.0,32.7 203.8,21.7 206.7,44.7 209.5,19.8 212.3,40.8 215.2,19.9 218.0,31.9 220.8,24.2 223.7,26.5 226.5,51.9 229.3,45.7 232.1,28.3 235.0,47.8 237.8,25.6 240.6,31.7 243.5,45.9 246.3,39.3 249.1,23.3 252.0,48.9 254.8,27.1 257.6,28.5 260.5,42.1 263.3,30.6 266.1,29.9 268.9,24.7 271.8,25.3 274.6,36.9 277.4,29.2 280.3,37.2 283.1,32.2 285.9,34.0 288.8,44.5 291.6,34.7 294.4,36.5 297.3,42.3 300.1,28.8 302.9,28.2 305.8,42.9 308.6,41.1 311.4,30.2 314.2,29.0 317.1,39.7 319.9,43.6 322.7,29.0 325.6,44.0 328.4,42.7 331.2,37.1 334.1,33.4 336.9,26.6 339.7,25.0 342.6,45.2 345.4,29.1 348.2,39.7 351.1,29.2 353.9,42.9 356.7,37.4 359.5,29.7 362.4,26.5 365.2,41.0 368.0,23.0 370.9,27.2 373.7,36.7 376.5,45.6 379.4,38.5 382.2,28.0 385.0,48.7 387.9,25.0 390.7,18.3 393.5,26.8 396.3,33.0 399.2,18.7 402.0,22.7 404.8,29.9 407.7,37.9 410.5,20.0 413.3,29.3 416.2,51.6 419.0,55.8 421.8,41.9 424.7,43.6 427.5,38.9 430.3,18.3 433.2,13.1 436.0,12.0 438.8,54.9 441.6,44.9 444.5,58.0 447.3,10.9 450.1,41.9 453.0,34.1 455.8,47.0 458.6,25.5 461.5,61.4 464.3,12.4 467.1,37.5 470.0,47.8 472.8,56.6 475.6,47.9 478.4,46.1 481.3,51.0 484.1,57.7 486.9,26.9 489.8,45.2 492.6,57.0 495.4,55.4 498.3,30.5 501.1,50.9 503.9,54.9 506.8,39.0 509.6,41.8 512.4,28.6 515.3,39.5 518.1,40.8 520.9,12.6 523.7,42.4 526.6,61.0 529.4,54.9 532.2,46.9 535.1,29.2 537.9,47.0 540.7,39.1 543.6,32.0 546.4,51.9 549.2,14.4 552.1,47.3 554.9,12.1 557.7,39.9 560.5,34.1 563.4,22.2 566.2,44.3 569.0,34.9 571.9,40.3 574.7,54.2 577.5,23.9 580.4,13.0 583.2,26.1 586.0,42.9 588.9,21.9 591.7,20.6 594.5,52.6 597.4,41.9 600.2,32.5 603.0,51.7 605.8,27.7 608.7,42.0 611.5,22.3 614.3,32.1 617.2,47.8 620.0,52.3" stroke="#d4d4d4" stroke-width="1" stroke-linejoin="round"></polyline><line x1="192.2" y1="0" x2="192.2" y2="70" stroke="{{accent}}" stroke-width="1.5"></line></svg></div>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; gap: 8px; font-size: 12px;"><span class="dim">Source</span><span>System audio · 44.1 kHz</span></div>
+          <div style="display: flex; align-items: center; gap: 14px;"><div class="mono" style="color: {{accent}}; font-size: 11px;">ON AIR</div><div class="btn">Stop</div></div>
+        </div>
+      </div>
+      
+      <div class="card" style="">
+        <div style="display: flex; align-items: center; gap: 8px;"><div class="title">This Mac</div></div>
+        <div class="led"></div>
+        <div class="viz"><svg width="120" height="70" viewBox="0 0 120 70" fill="none"><line x1="5.0" y1="70" x2="5.0" y2="45.5" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="15.0" y1="70" x2="15.0" y2="28.0" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="25.0" y1="70" x2="25.0" y2="10.5" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="35.0" y1="70" x2="35.0" y2="0.0" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="45.0" y1="70" x2="45.0" y2="21.0" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="55.0" y1="70" x2="55.0" y2="35.0" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="65.0" y1="70" x2="65.0" y2="14.0" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="75.0" y1="70" x2="75.0" y2="3.5" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="85.0" y1="70" x2="85.0" y2="31.5" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="95.0" y1="70" x2="95.0" y2="42.0" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="105.0" y1="70" x2="105.0" y2="49.0" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="115.0" y1="70" x2="115.0" y2="52.5" stroke="#d4d4d4" stroke-width="1.5"></line></svg></div>
+        <div class="params"><div class="p"><div class="k">Mode</div><div class="v mono a">Sync</div></div><div class="p"><div class="k">Volume</div><div class="v mono">80%</div></div><div class="p"><div class="k">Delay</div><div class="v mono">150 ms</div></div></div>
+      </div>
+
+      
+      <div class="card" style="">
+        <div style="display: flex; align-items: center; gap: 8px;"><div class="title">Sync</div></div>
+        <div class="led"></div>
+        <div class="viz"><svg width="84" height="84" viewBox="0 0 84 84" fill="none"><circle cx="42.0" cy="42.0" r="7.7" stroke="#5a5a5a" stroke-width="1"></circle><circle cx="42.0" cy="42.0" r="15.5" stroke="#5a5a5a" stroke-width="1"></circle><circle cx="42.0" cy="42.0" r="23.2" stroke="#5a5a5a" stroke-width="1"></circle><circle cx="42.0" cy="42.0" r="30.9" stroke="#5a5a5a" stroke-width="1"></circle><circle cx="42.0" cy="42.0" r="38.6" stroke="#5a5a5a" stroke-width="1"></circle><circle cx="42.0" cy="42.0" r="3" fill="{{accent}}"></circle></svg></div>
+        <div class="params"><div class="p"><div class="k">Clock offset</div><div class="v mono">+0.02 ms</div></div><div class="p"><div class="k">Drift</div><div class="v mono">0.00 ms</div></div><div class="p"><div class="k">Jitter</div><div class="v mono">0.16 ms</div></div></div>
+      </div>
+      
+      <div class="card" style="">
+        <div style="display: flex; align-items: center; gap: 8px;"><div class="title">MacBook Air</div></div>
+        <div class="led"></div>
+        <div class="viz"><svg width="150" height="64" viewBox="0 0 150 64" fill="none"><polyline points="0.0,36.7 0.7,41.3 1.4,43.3 2.1,49.0 2.7,41.2 3.4,48.3 4.1,13.8 4.8,30.7 5.5,49.3 6.2,37.8 6.8,47.8 7.5,16.6 8.2,30.8 8.9,21.8 9.6,33.8 10.3,35.0 11.0,11.9 11.6,20.2 12.3,22.8 13.0,49.6 13.7,43.3 14.4,17.4 15.1,44.9 15.8,16.2 16.4,37.2 17.1,15.4 17.8,9.6 18.5,48.8 19.2,18.7 19.9,18.9 20.5,54.4 21.2,49.4 21.9,22.1 22.6,53.9 23.3,33.9 24.0,40.5 24.7,17.7 25.3,53.4 26.0,41.3 26.7,54.9 27.4,51.4 28.1,22.1 28.8,25.1 29.5,15.4 30.1,14.4 30.8,10.4 31.5,22.1 32.2,37.1 32.9,7.3 33.6,40.8 34.2,24.0 34.9,22.6 35.6,47.7 36.3,31.1 37.0,23.0 37.7,31.1 38.4,41.9 39.0,10.8 39.7,54.5 40.4,9.6 41.1,43.6 41.8,47.9 42.5,10.0 43.2,45.0 43.8,26.0 44.5,35.4 45.2,10.7 45.9,12.7 46.6,18.6 47.3,50.8 47.9,19.7 48.6,42.2 49.3,48.8 50.0,49.0 50.7,26.1 51.4,26.6 52.1,32.9 52.7,41.7 53.4,18.5 54.1,40.4 54.8,41.8 55.5,43.5 56.2,17.5 56.8,45.6 57.5,19.9 58.2,27.4 58.9,35.1 59.6,43.5 60.3,27.7 61.0,43.0 61.6,33.1 62.3,27.4 63.0,27.6 63.7,24.5 64.4,22.4 65.1,24.2 65.8,36.1 66.4,42.4 67.1,25.0 67.8,22.9 68.5,41.6 69.2,32.6 69.9,30.2 70.5,27.1 71.2,33.7 71.9,37.9 72.6,31.2 73.3,30.6 74.0,24.1 74.7,39.4 75.3,23.7 76.0,31.9 76.7,38.0 77.4,25.4 78.1,36.2 78.8,40.2 79.5,34.4 80.1,37.4 80.8,24.5 81.5,30.7 82.2,25.1 82.9,39.0 83.6,27.8 84.2,31.0 84.9,42.8 85.6,39.8 86.3,42.9 87.0,30.9 87.7,31.7 88.4,37.7 89.0,31.5 89.7,26.5 90.4,29.4 91.1,22.2 91.8,28.5 92.5,46.2 93.2,45.8 93.8,35.9 94.5,32.0 95.2,26.8 95.9,18.4 96.6,24.3 97.3,41.8 97.9,45.1 98.6,27.0 99.3,42.6 100.0,42.4 100.7,39.5 101.4,38.5 102.1,42.5 102.7,26.4 103.4,40.5 104.1,22.7 104.8,31.4 105.5,43.8 106.2,40.5 106.8,22.7 107.5,52.3 108.2,38.9 108.9,35.8 109.6,9.0 110.3,34.2 111.0,20.1 111.6,40.3 112.3,30.2 113.0,47.5 113.7,39.3 114.4,46.7 115.1,24.4 115.8,39.2 116.4,43.9 117.1,48.4 117.8,24.5 118.5,49.2 119.2,50.6 119.9,41.5 120.5,55.9 121.2,54.9 121.9,32.9 122.6,33.5 123.3,15.4 124.0,48.7 124.7,53.6 125.3,30.9 126.0,41.3 126.7,42.7 127.4,43.1 128.1,16.3 128.8,45.3 129.5,35.8 130.1,39.8 130.8,28.3 131.5,37.7 132.2,44.6 132.9,38.2 133.6,41.9 134.2,11.0 134.9,17.0 135.6,29.4 136.3,38.5 137.0,19.9 137.7,39.9 138.4,37.5 139.0,12.8 139.7,30.8 140.4,20.7 141.1,13.8 141.8,17.2 142.5,24.7 143.2,19.3 143.8,19.8 144.5,13.7 145.2,30.6 145.9,27.3 146.6,36.3 147.3,35.5 147.9,21.9 148.6,47.5 149.3,12.9 150.0,28.4" stroke="#d4d4d4" stroke-width="1" stroke-linejoin="round"></polyline><line x1="75.0" y1="0" x2="75.0" y2="64" stroke="{{accent}}" stroke-width="1.5"></line></svg></div>
+        <div class="params"><div class="p"><div class="k">Round trip</div><div class="v mono">3.1 ms</div></div><div class="p"><div class="k">Buffer</div><div class="v mono">118 ms</div></div><div class="p"><div class="k">Volume</div><div class="v mono">65%</div></div></div>
+      </div>
+      
+      <div class="card" style="">
+        <div style="display: flex; align-items: center; gap: 8px;"><div class="title">Office-Mac</div></div>
+        <div class="led"></div>
+        <div class="viz"><svg width="150" height="64" viewBox="0 0 150 64" fill="none"><polyline points="0.0,43.2 0.7,44.3 1.4,31.4 2.1,22.8 2.7,12.8 3.4,38.3 4.1,30.8 4.8,42.1 5.5,27.0 6.2,42.6 6.8,23.0 7.5,44.0 8.2,41.2 8.9,28.5 9.6,33.6 10.3,39.4 11.0,19.3 11.6,34.2 12.3,44.8 13.0,22.1 13.7,44.9 14.4,40.0 15.1,46.9 15.8,24.8 16.4,14.0 17.1,45.4 17.8,45.7 18.5,29.5 19.2,13.4 19.9,18.1 20.5,38.3 21.2,22.2 21.9,53.3 22.6,36.2 23.3,17.7 24.0,39.5 24.7,25.3 25.3,53.0 26.0,52.0 26.7,32.7 27.4,39.1 28.1,41.8 28.8,47.1 29.5,55.6 30.1,8.6 30.8,25.1 31.5,37.1 32.2,22.3 32.9,36.4 33.6,11.6 34.2,50.8 34.9,33.2 35.6,13.2 36.3,40.0 37.0,22.9 37.7,17.3 38.4,31.2 39.0,14.7 39.7,18.2 40.4,49.2 41.1,41.2 41.8,9.5 42.5,44.7 43.2,10.2 43.8,24.6 44.5,49.8 45.2,37.2 45.9,23.7 46.6,26.8 47.3,27.4 47.9,16.8 48.6,51.9 49.3,14.5 50.0,29.0 50.7,41.3 51.4,28.2 52.1,49.4 52.7,23.0 53.4,48.5 54.1,45.2 54.8,37.6 55.5,44.5 56.2,30.3 56.8,42.1 57.5,40.8 58.2,32.5 58.9,31.2 59.6,37.6 60.3,29.6 61.0,21.3 61.6,38.2 62.3,26.2 63.0,31.7 63.7,38.6 64.4,24.6 65.1,21.4 65.8,23.9 66.4,33.9 67.1,29.1 67.8,27.1 68.5,31.0 69.2,40.3 69.9,27.3 70.5,30.3 71.2,39.0 71.9,34.0 72.6,27.8 73.3,31.5 74.0,31.6 74.7,25.7 75.3,29.8 76.0,28.6 76.7,37.4 77.4,28.8 78.1,34.9 78.8,40.6 79.5,39.8 80.1,29.7 80.8,34.0 81.5,28.5 82.2,30.0 82.9,31.8 83.6,38.1 84.2,41.2 84.9,27.5 85.6,21.0 86.3,30.8 87.0,21.6 87.7,20.7 88.4,38.8 89.0,22.1 89.7,37.7 90.4,28.3 91.1,44.1 91.8,42.0 92.5,19.2 93.2,22.8 93.8,45.8 94.5,35.6 95.2,29.5 95.9,41.4 96.6,42.7 97.3,31.7 97.9,30.9 98.6,17.4 99.3,26.9 100.0,18.5 100.7,36.9 101.4,36.2 102.1,17.7 102.7,37.2 103.4,15.2 104.1,15.3 104.8,38.3 105.5,30.4 106.2,49.7 106.8,37.8 107.5,41.2 108.2,14.8 108.9,47.5 109.6,12.4 110.3,37.6 111.0,51.7 111.6,51.7 112.3,51.1 113.0,29.7 113.7,41.5 114.4,46.4 115.1,14.0 115.8,54.1 116.4,52.4 117.1,29.0 117.8,46.0 118.5,29.3 119.2,20.8 119.9,42.7 120.5,10.1 121.2,47.0 121.9,55.9 122.6,21.3 123.3,53.9 124.0,11.4 124.7,49.7 125.3,21.2 126.0,54.8 126.7,28.6 127.4,52.4 128.1,9.6 128.8,12.3 129.5,46.9 130.1,38.5 130.8,33.7 131.5,10.4 132.2,17.1 132.9,26.1 133.6,11.9 134.2,54.0 134.9,43.7 135.6,51.7 136.3,40.7 137.0,25.3 137.7,14.0 138.4,41.8 139.0,15.9 139.7,34.0 140.4,30.5 141.1,31.8 141.8,14.8 142.5,14.9 143.2,32.8 143.8,13.4 144.5,33.0 145.2,18.3 145.9,23.5 146.6,18.5 147.3,34.6 147.9,27.7 148.6,21.4 149.3,21.3 150.0,34.5" stroke="#d4d4d4" stroke-width="1" stroke-linejoin="round"></polyline><line x1="75.0" y1="0" x2="75.0" y2="64" stroke="{{accent}}" stroke-width="1.5"></line></svg></div>
+        <div class="params"><div class="p"><div class="k">Round trip</div><div class="v mono">7.8 ms</div></div><div class="p"><div class="k">Buffer</div><div class="v mono">112 ms</div></div><div class="p"><div class="k">Volume</div><div class="v mono">100%</div></div></div>
+      </div>
+      <div class="card" style="border-style: dashed; border-color: #2a2a2a;">
+        <div class="title">Kitchen iMac</div>
+        <div class="led" style="background: #ffb347;"></div>
+        <div class="viz" style="flex-direction: column; gap: 6px;"><div style="font-size: 12px;">Wants to connect</div><div class="dim" style="font-size: 11px;">192.168.1.40 · no code entered, needs your OK</div></div>
+        <div style="display: flex; gap: 8px; justify-content: center;"><div class="btn primary">Allow</div><div class="btn">Deny</div></div>
+      </div>
+
+      
+      <div class="card" style="">
+        <div style="display: flex; align-items: center; gap: 8px;"><div class="title">Pairing</div></div>
+        <div class="led"></div>
+        <div class="viz"><div class="mono" style="font-size: 30px; letter-spacing: 0.3em; color: #f2f2f2;">4821</div></div>
+        <div class="params"><div class="p"><div class="k">Required</div><div class="v mono a">On</div></div><div class="p"><div class="k">Port</div><div class="v mono">51344</div></div></div>
+      </div>
+      
+      <div class="card" style="">
+        <div style="display: flex; align-items: center; gap: 8px;"><div class="title">Delay</div></div>
+        <div class="led"></div>
+        <div class="viz"><svg width="150" height="64" viewBox="0 0 150 64" fill="none"><line x1="2.5" y1="64" x2="2.5" y2="49.5" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="7.5" y1="64" x2="7.5" y2="48.0" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="12.5" y1="64" x2="12.5" y2="43.0" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="17.5" y1="64" x2="17.5" y2="41.5" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="22.5" y1="64" x2="22.5" y2="38.8" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="27.5" y1="64" x2="27.5" y2="31.0" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="32.5" y1="64" x2="32.5" y2="19.6" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="37.5" y1="64" x2="37.5" y2="16.3" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="42.5" y1="64" x2="42.5" y2="12.5" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="47.5" y1="64" x2="47.5" y2="18.5" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="52.5" y1="64" x2="52.5" y2="10.5" stroke="{{accent}}" stroke-width="1.5"></line><line x1="57.5" y1="64" x2="57.5" y2="14.1" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="62.5" y1="64" x2="62.5" y2="16.0" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="67.5" y1="64" x2="67.5" y2="18.2" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="72.5" y1="64" x2="72.5" y2="18.1" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="77.5" y1="64" x2="77.5" y2="8.9" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="82.5" y1="64" x2="82.5" y2="14.9" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="87.5" y1="64" x2="87.5" y2="20.1" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="92.5" y1="64" x2="92.5" y2="25.2" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="97.5" y1="64" x2="97.5" y2="36.7" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="102.5" y1="64" x2="102.5" y2="39.4" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="107.5" y1="64" x2="107.5" y2="40.4" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="112.5" y1="64" x2="112.5" y2="43.2" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="117.5" y1="64" x2="117.5" y2="45.5" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="122.5" y1="64" x2="122.5" y2="47.9" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="127.5" y1="64" x2="127.5" y2="53.3" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="132.5" y1="64" x2="132.5" y2="52.4" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="137.5" y1="64" x2="137.5" y2="53.2" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="142.5" y1="64" x2="142.5" y2="54.5" stroke="#d4d4d4" stroke-width="1.5"></line><line x1="147.5" y1="64" x2="147.5" y2="56.0" stroke="#d4d4d4" stroke-width="1.5"></line></svg></div>
+        <div class="params"><div class="p"><div class="k">Low</div><div class="v mono">60 ms</div></div><div class="p"><div class="k">Balanced</div><div class="v mono a">150 ms</div></div><div class="p"><div class="k">Max</div><div class="v mono">400 ms</div></div></div>
+      </div>
+      
+      <div class="card" style="">
+        <div style="display: flex; align-items: center; gap: 8px;"><div class="title">Click test</div></div>
+        <div class="led"></div>
+        <div class="viz"><svg width="160" height="64" viewBox="0 0 160 64" fill="none"><path d="M 0 32.0 L 67 32.0 L 74 6 L 80 58 L 86 16 L 93 32.0 L 160 32.0" stroke="#d4d4d4" stroke-width="1"></path><line x1="80" y1="0" x2="80" y2="64" stroke="{{accent}}" stroke-width="1" stroke-dasharray="2 3"></line></svg></div>
+        <div class="params"><div style="display: flex; gap: 8px;"><div class="btn">Clock click</div><div class="btn">Stream click</div></div></div>
+      </div>
+      <div class="card" style="justify-content: flex-end;">
+        <div class="viz" style="align-items: flex-start; justify-content: flex-start;"><div class="title">Network</div></div>
+        <div class="params" style="justify-content: flex-start;"><div class="p"><div class="k">Packets</div><div class="v mono">100/s</div></div><div class="p"><div class="k">Drops</div><div class="v mono">0</div></div><div class="p"><div class="k">Clocks</div><div class="v mono a">synced</div></div></div>
+      </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#ff4d1f","options":["#ff4d1f","#39ff88","#5ef2ff","#ff7ae0"]}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#ff4d1f' };
+  }
+}
+</script>
+</body>
+</html>
