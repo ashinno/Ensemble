@@ -34,13 +34,41 @@
   .btn.primary:hover { background: #ff6a42; color: var(--accent-ink); }
 
   /* hero */
-  .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; align-items: center; padding-block: 72px 40px; }
+  .hero { padding-block: 64px 24px; display: flex; flex-direction: column; gap: 44px; }
+  .hero-copy { max-width: 760px; }
   .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--accent); text-transform: uppercase; }
-  h1 { font-size: clamp(40px, 5.2vw, 64px); line-height: 1.02; letter-spacing: -0.03em; font-weight: 700; margin: 18px 0 20px; text-wrap: balance; }
+  h1 { font-size: clamp(42px, 6.4vw, 78px); line-height: 0.98; letter-spacing: -0.035em; font-weight: 700; margin: 18px 0 22px; text-wrap: balance; }
   h1 em { font-style: normal; color: var(--dim); }
-  .lede { font-size: 17px; color: var(--title); max-width: 34em; margin: 0 0 28px; text-wrap: pretty; }
+  .lede { font-size: 18px; color: var(--title); max-width: 36em; margin: 0 0 28px; text-wrap: pretty; }
   .cta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   .cta .note { font-size: 12px; color: var(--label); }
+
+  /* the app replica: laid out at its real 960px width, scaled to fit */
+  .window-wrap { width: 100%; overflow: hidden; }
+  .window { width: 960px; transform-origin: top left; background: var(--bg); border: 1px solid #262626; border-radius: 12px;
+            box-shadow: 0 40px 100px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.03) inset; }
+  .titlebar { display: flex; align-items: center; gap: 16px; height: 44px; padding: 0 16px; border-bottom: 1px solid #1a1a1a; }
+  .titlebar .lights { display: flex; gap: 7px; }
+  .titlebar .lights i { width: 11px; height: 11px; border-radius: 50%; background: #2a2a2a; display: block; }
+  .titlebar .name { font-size: 12px; font-weight: 600; flex: 1; }
+  .titlebar .dots { display: flex; gap: 6px; margin-right: 6px; }
+  .titlebar .dots i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+  .titlebar .tabs { display: flex; gap: 2px; background: #111; border: 1px solid var(--border); border-radius: 8px; padding: 2px; }
+  .titlebar .tabs span { font-size: 11px; color: var(--dim); padding: 5px 12px; border-radius: 6px; }
+  .titlebar .tabs span.on { color: var(--text); background: #1c1c1c; }
+  .hero-app { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: var(--gap); padding: 16px; }
+  .hero-app .module { min-height: 186px; }
+  .hero-app .params { flex-wrap: nowrap; }
+  .hero-app canvas { width: 100%; height: 72px; display: block; }
+  .hero-app .bars { width: 120px; height: 44px; }
+  .hero-app .fake-btn { font-size: 11px; padding: 5px 10px; border: 1px solid var(--border-2); border-radius: 8px; background: var(--card-2); color: var(--text); white-space: nowrap; }
+  .hero-app .fake-btn.on { background: var(--accent); color: var(--accent-ink); border-color: transparent; font-weight: 600; }
+  .hero-app .fake-btn.danger { color: #ff6b5c; }
+  .seg { display: flex; gap: 6px; justify-content: center; margin-bottom: 8px; }
+  .slider { position: relative; height: 3px; background: var(--border-2); border-radius: 2px; margin: 6px 0 2px; }
+  .slider i { position: absolute; left: 0; top: 0; height: 3px; border-radius: 2px; background: var(--accent); }
+  .slider b { position: absolute; top: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--text); }
+  .note-sm { font-size: 10px; color: var(--label); text-align: center; }
 
   /* module cards (the app's vocabulary) */
   .module { position: relative; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px;
@@ -50,8 +78,8 @@
   .module .viz { flex: 1; display: flex; align-items: center; justify-content: center; padding: 10px 0; }
   .params { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; }
   .p { display: flex; flex-direction: column; align-items: center; gap: 3px; }
-  .p .k { font-size: 10px; color: var(--label); }
-  .p .v { font-family: var(--mono); font-size: 13px; color: var(--text); }
+  .p .k { font-size: 10px; color: var(--label); white-space: nowrap; }
+  .p .v { font-family: var(--mono); font-size: 13px; color: var(--text); white-space: nowrap; }
   .p .v.a { color: var(--accent); }
   .master { grid-column: span 3; padding: 14px 20px; }
   .master .head { display: flex; justify-content: space-between; font-size: 13px; font-weight: 500; }
@@ -106,17 +134,13 @@
   footer .mono { color: var(--dim); }
 
   @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; gap: 32px; padding-block: 48px 24px; }
+    .hero { padding-block: 48px 16px; gap: 28px; }
     .grid-3, .grid-4, .steps, .spec { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    .hero-app { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    .master { grid-column: span 2; }
   }
   @media (max-width: 560px) {
     .grid-3, .grid-4, .steps, .spec, .grid-2 { grid-template-columns: 1fr; }
-    .hero-app { grid-template-columns: 1fr; }
-    .master { grid-column: span 1; }
     nav .links a:not(.btn) { display: none; }
-    h1 { font-size: 38px; }
+    h1 { font-size: 40px; }
   }
   @media (prefers-reduced-motion: reduce) { .anim { animation: none !important; } }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -135,9 +159,9 @@
   </nav>
 
   <header class="hero" id="top">
-    <div>
+    <div class="hero-copy">
       <div class="eyebrow"><span class="led"></span> macOS · Apple Silicon · local network</div>
-      <h1>One Mac plays.<br>Every Mac plays <em>with it.</em></h1>
+      <h1>One Mac plays.<br>Every Mac plays <em>with&nbsp;it.</em></h1>
       <p class="lede">Ensemble takes whatever your Mac is playing, Spotify, YouTube, a call, anything, and plays it through the speakers of the other Macs in the house at the same instant. No cables, no virtual audio driver, no account.</p>
       <div class="cta">
         <a class="btn primary" href="https://github.com/ashinno/Ensemble/releases/latest/download/Ensemble-0.4.0.zip">Download for macOS</a>
@@ -146,48 +170,75 @@
       </div>
     </div>
 
-    <div class="hero-app" aria-label="Live preview of the Ensemble host window">
-      <div class="module master">
-        <div class="head"><span>Ash's MacBook Pro</span><span class="time" id="clock">00:00:00</span></div>
-        <div class="viz" style="padding: 8px 0"><canvas id="wave" class="anim" width="1200" height="144"></canvas></div>
-        <div class="foot"><span class="src">Source <b>System audio</b> · 48 kHz</span><span class="onair">ON AIR</span></div>
-      </div>
-      <div class="module">
-        <div class="t">This Mac</div><span class="led"></span>
-        <div class="viz"><canvas id="bars" class="anim" width="240" height="88" style="width:120px;height:44px"></canvas></div>
-        <div class="seg"><span class="fake-btn on">Sync</span><span class="fake-btn">Direct</span><span class="fake-btn">Off</span></div>
-        <div class="params"><div class="p"><div class="k">Volume</div><div class="v">100%</div></div><div class="p"><div class="k">Delay</div><div class="v">60 ms</div></div></div>
-      </div>
-      <div class="module">
-        <div class="t">Sync</div><span class="led"></span>
-        <div class="viz">
-          <svg width="84" height="84" viewBox="0 0 84 84" fill="none" aria-hidden="true">
-            <circle cx="42" cy="42" r="7.7" stroke="#595959"/><circle cx="42" cy="42" r="15.5" stroke="#595959"/><circle cx="42" cy="42" r="23.2" stroke="#595959"/><circle cx="42" cy="42" r="30.9" stroke="#595959"/><circle cx="42" cy="42" r="38.6" stroke="#595959"/>
-            <circle cx="42" cy="42" r="3" fill="#ff4d1f"/>
-          </svg>
+    <div class="window-wrap" id="winwrap">
+      <div class="window" id="win" aria-label="Live preview of the Ensemble host window">
+        <div class="titlebar">
+          <div class="lights"><i></i><i></i><i></i></div>
+          <div class="name">Ensemble</div>
+          <div class="dots"><i style="background:#ff4d1f;box-shadow:0 0 0 1.5px #ececec"></i><i style="background:#39ff88"></i><i style="background:#5ef2ff"></i><i style="background:#ff7ae0"></i></div>
+          <div class="tabs"><span class="on">Host</span><span>Receiver</span></div>
         </div>
-        <div class="params"><div class="p"><div class="k">Drift</div><div class="v">0.00 ms</div></div><div class="p"><div class="k">Rate</div><div class="v">+0 ppm</div></div><div class="p"><div class="k">Buffer</div><div class="v">48 ms</div></div></div>
-      </div>
-      <div class="module">
-        <div class="t">MacBook Air</div><span class="led"></span>
-        <div class="viz"><canvas id="bars2" class="anim" width="240" height="88" style="width:120px;height:44px"></canvas></div>
-        <div class="params"><div class="p"><div class="k">RTT</div><div class="v">3.1 ms</div></div><div class="p"><div class="k">Needs</div><div class="v">52 ms</div></div><div class="p"><div class="k">Loss</div><div class="v">0.0%</div></div></div>
-      </div>
-      <div class="module">
-        <div class="t">Office Mac mini</div><span class="led"></span>
-        <div class="viz"><canvas id="bars3" class="anim" width="240" height="88" style="width:120px;height:44px"></canvas></div>
-        <div class="params"><div class="p"><div class="k">RTT</div><div class="v">1.9 ms</div></div><div class="p"><div class="k">Needs</div><div class="v">44 ms</div></div><div class="p"><div class="k">Loss</div><div class="v">0.0%</div></div></div>
-      </div>
-      <div class="module">
-        <div class="t">Pairing</div><span class="led"></span>
-        <div class="viz"><span class="mono" style="font-size: 30px; letter-spacing: .3em">4821</span></div>
-        <div class="params"><div class="p"><div class="k">Required</div><div class="v a">On</div></div><div class="p"><div class="k">Port</div><div class="v">51344</div></div></div>
-      </div>
-      <div class="module">
-        <div class="t">Delay</div><span class="led"></span>
-        <div class="viz"><svg width="150" height="48" viewBox="0 0 150 48" fill="none" aria-hidden="true"><line x1="2.5" y1="48" x2="2.5" y2="36.0" stroke="#d4d4d4" stroke-width="1.5"/><line x1="7.5" y1="48" x2="7.5" y2="31.6" stroke="#d4d4d4" stroke-width="1.5"/><line x1="12.5" y1="48" x2="12.5" y2="32.4" stroke="#d4d4d4" stroke-width="1.5"/><line x1="17.5" y1="48" x2="17.5" y2="32.0" stroke="#ff4d1f" stroke-width="1.5"/><line x1="22.5" y1="48" x2="22.5" y2="23.8" stroke="#d4d4d4" stroke-width="1.5"/><line x1="27.5" y1="48" x2="27.5" y2="18.8" stroke="#d4d4d4" stroke-width="1.5"/><line x1="32.5" y1="48" x2="32.5" y2="22.6" stroke="#d4d4d4" stroke-width="1.5"/><line x1="37.5" y1="48" x2="37.5" y2="19.2" stroke="#d4d4d4" stroke-width="1.5"/><line x1="42.5" y1="48" x2="42.5" y2="7.3" stroke="#d4d4d4" stroke-width="1.5"/><line x1="47.5" y1="48" x2="47.5" y2="7.5" stroke="#d4d4d4" stroke-width="1.5"/><line x1="52.5" y1="48" x2="52.5" y2="15.1" stroke="#d4d4d4" stroke-width="1.5"/><line x1="57.5" y1="48" x2="57.5" y2="8.4" stroke="#d4d4d4" stroke-width="1.5"/><line x1="62.5" y1="48" x2="62.5" y2="0.1" stroke="#d4d4d4" stroke-width="1.5"/><line x1="67.5" y1="48" x2="67.5" y2="8.9" stroke="#d4d4d4" stroke-width="1.5"/><line x1="72.5" y1="48" x2="72.5" y2="16.3" stroke="#d4d4d4" stroke-width="1.5"/><line x1="77.5" y1="48" x2="77.5" y2="9.8" stroke="#d4d4d4" stroke-width="1.5"/><line x1="82.5" y1="48" x2="82.5" y2="9.9" stroke="#d4d4d4" stroke-width="1.5"/><line x1="87.5" y1="48" x2="87.5" y2="21.4" stroke="#d4d4d4" stroke-width="1.5"/><line x1="92.5" y1="48" x2="92.5" y2="25.1" stroke="#d4d4d4" stroke-width="1.5"/><line x1="97.5" y1="48" x2="97.5" y2="21.9" stroke="#d4d4d4" stroke-width="1.5"/><line x1="102.5" y1="48" x2="102.5" y2="26.4" stroke="#d4d4d4" stroke-width="1.5"/><line x1="107.5" y1="48" x2="107.5" y2="33.8" stroke="#d4d4d4" stroke-width="1.5"/><line x1="112.5" y1="48" x2="112.5" y2="34.3" stroke="#d4d4d4" stroke-width="1.5"/><line x1="117.5" y1="48" x2="117.5" y2="33.5" stroke="#d4d4d4" stroke-width="1.5"/><line x1="122.5" y1="48" x2="122.5" y2="37.3" stroke="#d4d4d4" stroke-width="1.5"/><line x1="127.5" y1="48" x2="127.5" y2="40.3" stroke="#d4d4d4" stroke-width="1.5"/><line x1="132.5" y1="48" x2="132.5" y2="39.3" stroke="#d4d4d4" stroke-width="1.5"/><line x1="137.5" y1="48" x2="137.5" y2="39.1" stroke="#d4d4d4" stroke-width="1.5"/><line x1="142.5" y1="48" x2="142.5" y2="41.5" stroke="#d4d4d4" stroke-width="1.5"/><line x1="147.5" y1="48" x2="147.5" y2="42.2" stroke="#d4d4d4" stroke-width="1.5"/></svg></div>
-        <div class="seg"><span class="fake-btn on">Auto</span><span class="fake-btn">Low</span><span class="fake-btn">Mid</span><span class="fake-btn">Max</span></div>
-        <div class="params"><div class="p"><div class="k">Delay</div><div class="v a">60 ms</div></div></div>
+        <div class="hero-app">
+          <div class="module master">
+            <div class="head"><span>Ash's MacBook Pro</span><span class="time" id="clock">00:00:00</span></div>
+            <div class="viz" style="padding: 8px 0"><canvas id="wave" class="anim" width="1240" height="144"></canvas></div>
+            <div class="foot"><span class="src">Source <span class="fake-btn on" style="margin:0 4px">System audio</span><span class="fake-btn" style="margin-right:8px">Test tone</span>48 kHz</span><span><span class="onair" style="margin-right:12px">ON AIR</span><span class="fake-btn danger">Stop</span></span></div>
+          </div>
+          <div class="module">
+            <div class="t">This Mac</div><span class="led"></span>
+            <div class="viz" style="flex-direction:column;gap:10px"><canvas id="bars" class="anim bars" width="240" height="88"></canvas><div class="slider" style="width:100%"><i style="width:100%"></i><b style="left:calc(100% - 5px)"></b></div></div>
+            <div class="seg"><span class="fake-btn on">Sync</span><span class="fake-btn">Direct</span><span class="fake-btn">Off</span></div>
+            <div class="params"><div class="p"><div class="k">Volume</div><div class="v">100%</div></div><div class="p"><div class="k">Delay</div><div class="v">60 ms</div></div></div>
+          </div>
+
+          <div class="module">
+            <div class="t">Sync</div><span class="led"></span>
+            <div class="viz">
+              <svg width="84" height="84" viewBox="0 0 84 84" fill="none" aria-hidden="true">
+                <circle cx="42" cy="42" r="7.7" stroke="#595959"/><circle cx="42" cy="42" r="15.5" stroke="#595959"/><circle cx="42" cy="42" r="23.2" stroke="#595959"/><circle cx="42" cy="42" r="30.9" stroke="#595959"/><circle cx="42" cy="42" r="38.6" stroke="#595959"/>
+                <circle cx="42" cy="42" r="3" fill="#ff4d1f"/>
+              </svg>
+            </div>
+            <div class="params"><div class="p"><div class="k">Drift</div><div class="v">0.00 ms</div></div><div class="p"><div class="k">Rate</div><div class="v">+0 ppm</div></div><div class="p"><div class="k">Buffer</div><div class="v">48 ms</div></div></div>
+          </div>
+          <div class="module">
+            <div class="t">MacBook Air</div><span class="led"></span>
+            <div class="viz" style="flex-direction:column;gap:10px"><canvas id="bars2" class="anim bars" width="240" height="88"></canvas><div class="slider" style="width:100%"><i style="width:65%"></i><b style="left:calc(65% - 5px)"></b></div></div>
+            <div class="params" style="gap:9px"><div class="p"><div class="k">RTT</div><div class="v">3.1 ms</div></div><div class="p"><div class="k">Needs</div><div class="v">52 ms</div></div><div class="p"><div class="k">Loss</div><div class="v">0.0%</div></div><span class="fake-btn" style="padding:3px 7px">Drop</span></div>
+          </div>
+          <div class="module">
+            <div class="t">Office Mac mini</div><span class="led"></span>
+            <div class="viz" style="flex-direction:column;gap:10px"><canvas id="bars3" class="anim bars" width="240" height="88"></canvas><div class="slider" style="width:100%"><i style="width:80%"></i><b style="left:calc(80% - 5px)"></b></div></div>
+            <div class="params" style="gap:9px"><div class="p"><div class="k">RTT</div><div class="v">1.9 ms</div></div><div class="p"><div class="k">Needs</div><div class="v">44 ms</div></div><div class="p"><div class="k">Loss</div><div class="v">0.0%</div></div><span class="fake-btn" style="padding:3px 7px">Drop</span></div>
+          </div>
+          <div class="module">
+            <div class="t">Pairing</div><span class="led"></span>
+            <div class="viz"><span class="mono" style="font-size: 30px; letter-spacing: .3em">4821</span></div>
+            <div class="params" style="gap:10px"><span class="fake-btn on" style="padding:3px 8px">Required</span><span class="fake-btn" style="padding:3px 8px">New code</span><div class="p"><div class="k">Port</div><div class="v">51344</div></div></div>
+          </div>
+
+          <div class="module">
+            <div class="t">Delay</div><span class="led"></span>
+            <div class="viz"><svg width="150" height="48" viewBox="0 0 150 48" fill="none" aria-hidden="true"><line x1="2.5" y1="48" x2="2.5" y2="36.0" stroke="#d4d4d4" stroke-width="1.5"/><line x1="7.5" y1="48" x2="7.5" y2="31.6" stroke="#d4d4d4" stroke-width="1.5"/><line x1="12.5" y1="48" x2="12.5" y2="32.4" stroke="#d4d4d4" stroke-width="1.5"/><line x1="17.5" y1="48" x2="17.5" y2="32.0" stroke="#ff4d1f" stroke-width="1.5"/><line x1="22.5" y1="48" x2="22.5" y2="23.8" stroke="#d4d4d4" stroke-width="1.5"/><line x1="27.5" y1="48" x2="27.5" y2="18.8" stroke="#d4d4d4" stroke-width="1.5"/><line x1="32.5" y1="48" x2="32.5" y2="22.6" stroke="#d4d4d4" stroke-width="1.5"/><line x1="37.5" y1="48" x2="37.5" y2="19.2" stroke="#d4d4d4" stroke-width="1.5"/><line x1="42.5" y1="48" x2="42.5" y2="7.3" stroke="#d4d4d4" stroke-width="1.5"/><line x1="47.5" y1="48" x2="47.5" y2="7.5" stroke="#d4d4d4" stroke-width="1.5"/><line x1="52.5" y1="48" x2="52.5" y2="15.1" stroke="#d4d4d4" stroke-width="1.5"/><line x1="57.5" y1="48" x2="57.5" y2="8.4" stroke="#d4d4d4" stroke-width="1.5"/><line x1="62.5" y1="48" x2="62.5" y2="0.1" stroke="#d4d4d4" stroke-width="1.5"/><line x1="67.5" y1="48" x2="67.5" y2="8.9" stroke="#d4d4d4" stroke-width="1.5"/><line x1="72.5" y1="48" x2="72.5" y2="16.3" stroke="#d4d4d4" stroke-width="1.5"/><line x1="77.5" y1="48" x2="77.5" y2="9.8" stroke="#d4d4d4" stroke-width="1.5"/><line x1="82.5" y1="48" x2="82.5" y2="9.9" stroke="#d4d4d4" stroke-width="1.5"/><line x1="87.5" y1="48" x2="87.5" y2="21.4" stroke="#d4d4d4" stroke-width="1.5"/><line x1="92.5" y1="48" x2="92.5" y2="25.1" stroke="#d4d4d4" stroke-width="1.5"/><line x1="97.5" y1="48" x2="97.5" y2="21.9" stroke="#d4d4d4" stroke-width="1.5"/><line x1="102.5" y1="48" x2="102.5" y2="26.4" stroke="#d4d4d4" stroke-width="1.5"/><line x1="107.5" y1="48" x2="107.5" y2="33.8" stroke="#d4d4d4" stroke-width="1.5"/><line x1="112.5" y1="48" x2="112.5" y2="34.3" stroke="#d4d4d4" stroke-width="1.5"/><line x1="117.5" y1="48" x2="117.5" y2="33.5" stroke="#d4d4d4" stroke-width="1.5"/><line x1="122.5" y1="48" x2="122.5" y2="37.3" stroke="#d4d4d4" stroke-width="1.5"/><line x1="127.5" y1="48" x2="127.5" y2="40.3" stroke="#d4d4d4" stroke-width="1.5"/><line x1="132.5" y1="48" x2="132.5" y2="39.3" stroke="#d4d4d4" stroke-width="1.5"/><line x1="137.5" y1="48" x2="137.5" y2="39.1" stroke="#d4d4d4" stroke-width="1.5"/><line x1="142.5" y1="48" x2="142.5" y2="41.5" stroke="#d4d4d4" stroke-width="1.5"/><line x1="147.5" y1="48" x2="147.5" y2="42.2" stroke="#d4d4d4" stroke-width="1.5"/></svg></div>
+            <div class="seg"><span class="fake-btn on">Auto</span><span class="fake-btn">Low</span><span class="fake-btn">Mid</span><span class="fake-btn">Max</span></div>
+            <div class="note-sm">60 ms · slowest Mac needs 52 ms</div>
+          </div>
+          <div class="module">
+            <div class="t">Click test</div><span class="led idle"></span>
+            <div class="viz"><svg width="160" height="48" viewBox="0 0 160 48" fill="none" aria-hidden="true"><path d="M0 24h67l6-19 7 38 6-31 7 12h67" stroke="#d4d4d4"/><path d="M80 0v48" stroke="#ff4d1f" stroke-dasharray="2 3"/></svg></div>
+            <div class="params" style="gap:8px"><span class="fake-btn">Clock click</span><span class="fake-btn">Stream click</span></div>
+          </div>
+          <div class="module">
+            <div class="t">Network</div><span class="led"></span>
+            <div class="viz" style="flex-direction:column;align-items:flex-start;gap:4px;font-size:11px;color:var(--dim)"><span>Broadcasting on TCP 51344 · UDP 51345</span><span style="color:var(--label)">Local network only</span></div>
+            <div class="params" style="gap:14px"><div class="p"><div class="k">Packets</div><div class="v">200/s</div></div><div class="p"><div class="k">Clocks</div><div class="v a">2/2</div></div><span class="fake-btn" style="padding:3px 8px">Diagnostics</span></div>
+          </div>
+          <div class="module" style="border-style:dashed;border-color:#2a2a2a">
+            <div class="t">Kitchen iMac</div><span class="led" style="background:#ffb347;box-shadow:0 0 8px rgba(255,179,71,.5)"></span>
+            <div class="viz" style="flex-direction:column;gap:6px;text-align:center"><span style="font-size:12px">Wants to connect</span><span style="font-size:11px;color:var(--dim)">192.168.1.40 · needs your OK</span></div>
+            <div class="params" style="gap:8px"><span class="fake-btn on">Allow</span><span class="fake-btn">Deny</span></div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -310,6 +361,9 @@
     const s = Math.floor(t); clock.textContent = String(Math.floor(s/3600)).padStart(2,'0') + ':' + String(Math.floor(s/60)%60).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
     if (!reduce) requestAnimationFrame(tick);
   }
+  const win = document.getElementById('win'), wrap = document.getElementById('winwrap');
+  function fit() { const sc = Math.min(1, wrap.clientWidth / 960); win.style.transform = 'scale(' + sc + ')'; wrap.style.height = (win.offsetHeight * sc) + 'px'; }
+  new ResizeObserver(fit).observe(wrap); fit();
   for (let i = 0; i < hist.length; i++) hist[i] = level(i/50);
   drawWave(); bars.forEach((b,i) => drawBars(b, i*0.05));
   if (!reduce) requestAnimationFrame(tick);
